@@ -1,0 +1,83 @@
+<section class="notes">
+    <div class="notes-container">
+        <div class="content">
+            <div class="content-header">
+                <div class="header-title">
+                 <span>Ваши заметки</span>
+                </div>
+                <div class="header-title">
+                  <span>Все заметки</span>
+                 </div>
+                <div class="header-date">
+                  <span>20.04.2021</span>
+                </div>
+            </div>
+
+            <div class="content-table">
+                <div class="table-header">
+                  <div class="header-item hi-number">
+                    <span>#</span>
+                  </div>
+                  <div class="header-item hi-date">
+                    <span>Date</span>
+                  </div>
+                 
+                  <div class="header-item hi-task">
+                    <span>Task</span>
+                    
+                  </div>
+                  <div class="header-item hi-user">
+                    <span>Creator</span>
+                  </div>
+                  <div class="header-item hi-priority">
+                    <span>Priority</span>
+                  </div>
+                  <div class="header-item hi-ended">
+                    <span>Date End</span>
+                    
+                  </div>
+                  <div class="header-item hi-actual">
+                    <span>Checkbox</span>
+                  </div>
+                </div>
+                <div class="table-object"
+                     *ngFor="let userNote of userNotes">
+                  <div class="header-item hi-number">
+                    <span>1</span>
+                  </div>
+                  <div class="header-item hi-date">
+                    <span>
+                      {{userNote.created | date:'hh-mm'}}
+                    </span>
+                  </div>
+                  
+                  <div class="header-item hi-task">
+                   <span> {{userNote.text}} </span>
+                  </div>
+                  <div class="header-item hi-user">
+                    <span>
+                    IvanovIvanovIvanovIvanov
+                    </span>
+                  </div>
+                  <div class="header-item hi-priority">
+                    <span>{{userNote.priority}}</span>
+                  </div>
+                  <div class="header-item hi-ended">
+                    <span>
+                      12.04
+                    </span>
+                  </div>
+                  <div class="header-item hi-actual">
+                    <span>{{userNote.isActual}}</span>
+                  </div>
+                </div>
+            </div>
+
+            <div class="add-note-btn">
+              <a  (click)="AddUserNote()">
+                Add Note
+              </a>
+            </div>
+        </div>
+    </div>
+</section>

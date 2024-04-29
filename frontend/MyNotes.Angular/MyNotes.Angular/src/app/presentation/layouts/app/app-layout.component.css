@@ -1,0 +1,21 @@
+.bg-image{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.app-layout{
+    height: 73vh;
+}
+
+.header{
+    margin-bottom: 40px;
+}
+
+.body{
+    display: flex;
+}
+.router-outlet{
+    width: 100%;
+    margin-left: 30px;
+}

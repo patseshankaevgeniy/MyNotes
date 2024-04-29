@@ -1,0 +1,21 @@
+.note-box{
+  padding: 50px;
+}
+
+
+.note-text{
+  margin-bottom: 20px;
+}
+
+.note-priority{
+  margin-bottom: 20px;
+  
+}
+
+.note-priority select{
+  width: 50%;
+}
+
+.note-date{
+  margin-bottom: 20px;
+}

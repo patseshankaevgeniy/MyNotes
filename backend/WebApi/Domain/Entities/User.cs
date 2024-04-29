@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
 
 namespace Domain.Entities;
 
@@ -16,5 +17,6 @@ public sealed class User : IdentityUser<Guid>
 
     public Group? Group { get; set; }
     public Language Language { get; set; } = default!;
+    public ICollection<UserNote>? Notes { get; set; }
     public MembershipStatus? MembershipStatus { get; set; }
 }

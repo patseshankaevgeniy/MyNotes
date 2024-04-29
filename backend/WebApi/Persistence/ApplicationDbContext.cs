@@ -12,8 +12,10 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>, IApplic
 {
     public DbSet<Group> Groups => Set<Group>();
     public DbSet<Language> Languages => Set<Language>();
+    public DbSet<UserNote> UserNotes => Set<UserNote>();
     public DbSet<IdentityUserToken<Guid>> UserTokens => Set<IdentityUserToken<Guid>>();
     public DbSet<MembershipStatus> MembershipStatuses => Set<MembershipStatus>();
+
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)

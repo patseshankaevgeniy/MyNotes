@@ -1,0 +1,24 @@
+
+<div 
+  class="navigation-bar__list"
+>
+  <div
+    class="navigation-bar__list-item"
+    *ngFor="let navigationItem of navigationItems"
+    (click)="onNavigationItemSelected(navigationItem)"
+  >
+    
+    <div
+      class="navigation-bar__list-item_link"
+      [class.navigation-bar__list-item_link-selected]="navigationItem.selected"
+    >
+      <span class="item-text">
+        {{ navigationItem.name }}
+      </span>
+    </div>
+
+    <div
+      [class.navigation-bar__list-item_gradient]="navigationItem.selected"
+    ></div>
+  </div>
+</div>

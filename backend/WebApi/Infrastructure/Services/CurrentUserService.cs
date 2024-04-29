@@ -17,12 +17,6 @@ public sealed class CurrentUserService : ICurrentUserService, ICurrentUserInitia
     public IEnumerable<Guid> UserGroupMembersIds { get; private set; } = default!;
     public bool UserHasMembers => UserGroupMembersIds.Any();
 
-    Guid ICurrentUserService.UserId => throw new NotImplementedException();
-
-    UserModel ICurrentUserService.User => throw new NotImplementedException();
-
-    IEnumerable<Guid> ICurrentUserService.UserGroupMembersIds => throw new NotImplementedException();
-
     public CurrentUserService(IUsersCacheService usersCacheService)
     {
         _usersCacheService = usersCacheService;

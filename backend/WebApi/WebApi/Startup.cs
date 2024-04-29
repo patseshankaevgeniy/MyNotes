@@ -15,6 +15,8 @@ using System.Text;
 using SignalR.HubConfig;
 using WebApi.Infrastructure.Middlewares;
 using System.Reflection;
+using SignalR;
+using System.Text.Json.Serialization;
 
 
 namespace WebApi;
@@ -39,15 +41,16 @@ public class Startup
         // Application dependencies
         services.AddApplicationDependencies()
                 .AddInfrastructureDependencies(_configuration)
+                .AddSignalRDependencies(_configuration)
                 .AddPersistenceDependencies(_configuration);
 
         // Api configuration
         services
             .AddHttpClient()
             .AddAutoMapper(Assembly.GetExecutingAssembly())
-            .AddControllers();
-            //.AddNewtonsoftJson(options =>
-            //    options.SerializerSettings.Converters.Add(new StringEnumConverter()));
+            .AddControllers()
+            .AddJsonOptions(options =>
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())); ;
 
         services.AddCors(opt => opt.AddDefaultPolicy(b => b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
 
@@ -88,9 +91,6 @@ public class Startup
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Auth:Key"]))
                 };
             });
-
-        // Mappers
-        //services.AddAutoMapper(typeof(DepartmentDtoAutoMapper), typeof(ProductDtoAutoMapper), typeof(WorkerDtoAutoMapper));
 
         // Swagger Configurarion
         services.AddSwaggerGen(options =>
@@ -143,6 +143,7 @@ public class Startup
             .UseCors()
             .UseAuthentication()
             .UseAuthorization()
+            .UseMiddleware<InitializeCurrentUserMiddleware>()
             .UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
