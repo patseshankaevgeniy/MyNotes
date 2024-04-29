@@ -10,6 +10,6 @@ public sealed class UserDto
     public string SecondName { get; init; } = default!;
     public Guid LanguageId { get; init; } = default!;
     public string Email { get; init; } = default!;
-    public Guid ImageId { get; init; }
-    public string ImageUrl { get; init; } = default!;
+   // public Guid ImageId { get; init; }
+    //public string ImageUrl { get; init; } = default!;
 }
