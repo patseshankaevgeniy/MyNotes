@@ -1,0 +1,30 @@
+.navigation-bar__list{
+    height: 550px;
+    margin-left: 40px;
+    position: sticky;
+    width: 300px;
+    display: grid;
+    justify-items: center;
+    align-content: space-evenly;
+   
+    background-color: rgba(0, 0, 0, .5);
+    opacity: 0.8;
+    border-radius: 20px;
+} 
+
+.navigation-bar__list-item{
+    width: 100%;
+}
+
+.navigation-bar__list-item:hover{
+    background-color: rgb(103 101 101);
+    cursor: pointer;
+}
+
+.item-text{
+    color: rgba(70, 183, 248, 0.8);
+    font-size: 46px;
+    display: block;
+    padding: 11px 26px;
+    text-align: center;
+}

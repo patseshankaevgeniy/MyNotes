@@ -1,0 +1,25 @@
+<section class="header">
+    <div class="container ">
+       <div class="navigation-wrapper">
+
+         <div class="logo">
+          <span>MY</span>
+         </div>
+
+         <nav class="navigation">
+          <ul class="navigation-list">
+            <li class="navigation-item"
+            *ngFor="let navigationItem of navigationItems"
+            (click)="onNavigationItemSelected(navigationItem)">
+              <div  class="navigation-list-item_link"
+              [class.navigation-bar-list-item_link-selected]="navigationItem.selected" 
+              >
+                <span>
+                  {{ navigationItem.name }}
+                </span>
+              </div>
+          </ul>
+         </nav>
+       </div>
+    </div>
+</section>

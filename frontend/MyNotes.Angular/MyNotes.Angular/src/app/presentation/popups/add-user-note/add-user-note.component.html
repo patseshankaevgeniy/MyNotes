@@ -1,0 +1,21 @@
+<div class="note-box">
+  <div class="note-text">
+    <label>Имя</label><br>
+    <input name="text"  [(ngModel)] ="noteText" />
+
+    
+</div>
+<div class="note-priority">
+    <label>Priority</label><br>
+    <select name="priority" [(ngModel)]="notePriority">
+      <option *ngFor="let state of fileTypes | keyvalue" [value]="state.key">
+        {{state.value}}
+      </option>
+    </select>
+
+</div>
+<div class="note-date">
+  <input type="date" [(ngModel)]="dateSelected"/>     
+</div>
+<button (click)="submit()" >Отправить </button>
+</div>

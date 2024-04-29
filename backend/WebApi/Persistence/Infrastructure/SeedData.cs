@@ -75,4 +75,9 @@ public static class SeedData
             Password = "qwerty"
         });
     }
+
+    private static async Task CreateDefaultUserNotessAsync(IMediator mediator)
+    {
+        //await mediator.Send();
+    }
 }

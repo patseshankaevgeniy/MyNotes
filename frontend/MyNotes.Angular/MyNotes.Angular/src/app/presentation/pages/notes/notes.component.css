@@ -1,0 +1,119 @@
+.notes{
+    height: 100%;
+    margin-right: 50px;
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 20px;
+    position: relative;
+}
+
+.notes-container{
+   padding: 10px 20px;
+}
+
+.content-header{
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-around;
+    
+    margin-bottom: 30px;
+}
+
+.content-header span{
+    color: rgba(70, 183, 248, 0.8);
+    font-size: 30px;
+}
+
+.table-header{
+    display: flex;
+    padding: 0 10px;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, .9);
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.header-item{
+    display: block;
+    text-align: center;
+    overflow: hidden;
+}
+
+.header-item span{
+    color: rgba(183, 229, 255, 0.8);;
+}
+
+.header-item.hi-number {
+    width: 10px;
+}
+
+.header-item.hi-date{
+    width: 50px;
+}
+
+.header-item.hi-user{
+    width: 100px;
+}
+
+.header-item.hi-user span{
+    white-space: nowrap;
+    
+}
+
+.header-item.hi-task{
+    width: 600px;
+}
+
+.header-item.hi-priority{
+    width: 49px;
+}
+
+.header-item.hi-ended{
+    width: 50px;
+}
+
+.header-item.hi-actual{
+    width: 65px;
+}
+
+.table-object{
+    display: flex;
+    padding: 0 10px;
+    margin-bottom: 3px;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, .9);
+    border-radius: 5px;
+}
+
+.object-data span{
+    color: white;
+}
+
+.object-data.od-task{
+    width: 600px;
+}
+
+.add-note-btn{
+    position: absolute;
+    top:80%;
+    left: 82%;
+}
+
+.add-note-btn a{
+  display: inline-block;
+  padding: 10px 20px;
+  color: #03e9f4;
+  font-size: 16px;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: 0.5s;
+  margin-top: 40px;
+  letter-spacing: 4px;
+}
+.add-note-btn a:hover{
+    cursor: pointer;
+}
+
+
+

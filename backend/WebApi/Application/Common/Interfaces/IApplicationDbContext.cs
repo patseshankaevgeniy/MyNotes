@@ -11,6 +11,7 @@ namespace Application.Common.Interfaces
     {
         DbSet<User> Users { get; }
         DbSet<Group> Groups { get; }
+        DbSet<UserNote> UserNotes { get; }
         DbSet<Language> Languages { get; }
         DbSet<MembershipStatus> MembershipStatuses { get; }
         DbSet<IdentityUserToken<Guid>> UserTokens { get; }

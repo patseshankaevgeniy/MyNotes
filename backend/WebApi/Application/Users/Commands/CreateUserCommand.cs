@@ -41,7 +41,7 @@ public sealed class CreateUserCommandHandler : IRequestHandler<CreateUserCommand
     private readonly IMapper _mapper;
     private readonly IGuidService _guidService;
     private readonly UserManager<User> _userManager;
-    //private readonly IMessageService _messageService;
+    private readonly IMessageService _messageService;
     private readonly IDateTimeService _dateTimeService;
     private readonly IConstantsService _constantsService;
 
@@ -49,14 +49,14 @@ public sealed class CreateUserCommandHandler : IRequestHandler<CreateUserCommand
         IMapper mapper,
         IGuidService guidService,
         UserManager<User> userManager,
-       // IMessageService messageService,
+        IMessageService messageService,
         IDateTimeService dateTimeService,
         IConstantsService constantsService)
     {
         _mapper = mapper;
         _guidService = guidService;
         _userManager = userManager;
-       // _messageService = messageService;
+        _messageService = messageService;
         _dateTimeService = dateTimeService;
         _constantsService = constantsService;
     }
@@ -82,7 +82,7 @@ public sealed class CreateUserCommandHandler : IRequestHandler<CreateUserCommand
             throw new BadRequestException($"Some error during creation of user: {errors}");
         }
 
-        //await _messageService.SendUserCreatedAsync(user.Id);
+        await _messageService.SendUserCreatedAsync(user.Id);
 
         return _mapper.Map<UserModel>(user);
     }

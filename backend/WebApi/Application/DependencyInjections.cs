@@ -2,7 +2,6 @@
 using Application.Common.Services;
 using FluentValidation;
 using MediatR;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -25,10 +24,10 @@ public static class DependencyInjections
            .AddSingleton<IImageUrlBuilder, ImageUrlBuilder>()
            .AddSingleton<IDateTimeService, DateTimeService>()
            .AddSingleton<IConstantsService, ConstantsService>();
-            
+
 
         services
-          //.AddScoped<IMessageService, MessageService>()
+          .AddScoped<IMessageService, MessageService>()
           .AddScoped<IUsersCacheService, UsersCacheService>();
 
         return services;
