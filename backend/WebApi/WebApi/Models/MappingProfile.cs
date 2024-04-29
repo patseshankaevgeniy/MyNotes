@@ -14,8 +14,8 @@ public sealed class MappingProfile : Profile
     {
         CreateMap<LogInResultModel, LogInResultDto>().ReverseMap();
 
-        CreateMap<UserModel, UserDto>()
-            .ForMember(dto => dto.ImageUrl, opt => opt.MapFrom<UserImageUrlResolver>());
+        CreateMap<UserModel, UserDto>();
+           // .ForMember(dto => dto.ImageUrl, opt => opt.MapFrom<UserImageUrlResolver>());
 
         CreateMap<MemberModel, MemberDto>();
             //.ForMember(dto => dto.ImageUrl, opt => opt.MapFrom<MemberImageUrlResolver>());
