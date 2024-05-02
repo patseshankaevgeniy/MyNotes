@@ -3,20 +3,25 @@ using Application.Common.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using WebApi.Models.Common;
 
 namespace WebApi.Infrastructure.Middlewares;
 
 public sealed class CustomExceptionHandlerMiddleware
 {
     private readonly RequestDelegate _next;
+    private readonly ILogger _logger;
 
     public CustomExceptionHandlerMiddleware(
-        RequestDelegate next)
+        RequestDelegate next, 
+        ILogger<CustomExceptionHandlerMiddleware> logger)
     {
         _next = next;
+        _logger = logger;
     }
 
     public async Task InvokeAsync(HttpContext context)
@@ -27,45 +32,42 @@ public sealed class CustomExceptionHandlerMiddleware
         }
         catch (Exception ex)
         {
-            var result = new ApiError();
-
-            switch (ex)
-            {
-                case ValidationException validationException:
-                    result.StatusCode = (int)HttpStatusCode.BadRequest;
-                    result.Message = validationException.Message;
-                    break;
-
-                case BadRequestException badRequestException:
-                    result.StatusCode = (int)HttpStatusCode.NotFound;
-                    result.Message = badRequestException.Message;
-                    break;
-
-                case ForbiddenException forbiddenException:
-                    result.StatusCode = (int)HttpStatusCode.NotFound;
-                    result.Message = forbiddenException.Message;
-                    break;
-
-                case NotFoundException notFoundException:
-                    result.StatusCode = (int)HttpStatusCode.NotFound;
-                    result.Message = notFoundException.Message;
-                    break;
-
-                case AccessViolationException accessViolationException:
-                    result.StatusCode = (int)HttpStatusCode.Forbidden;
-                    result.Message = accessViolationException.Message;
-                    break;
-
-                default:
-                    result.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    result.Message = ex.Message;
-                    break;
-            }
-
-            context.Response.ContentType = "application/json";
-            context.Response.StatusCode = result.StatusCode;
-
-            await context.Response.WriteAsJsonAsync(result);
+            await HandleExceptionAsync(context, ex);
         }
+    }
+
+    private async Task HandleExceptionAsync(HttpContext context, Exception exception)
+    {
+        var code = HttpStatusCode.InternalServerError;
+        var result = string.Empty;
+
+        switch (exception)
+        {
+            case ValidationException validationException:
+                code = HttpStatusCode.BadRequest;
+                result = JsonConvert.SerializeObject(new ErrorDto { Message = validationException.FormattedMessage });
+                break;
+            case BadRequestException badRequestException:
+                code = HttpStatusCode.BadRequest;
+                result = JsonConvert.SerializeObject(new ErrorDto { Message = badRequestException.Message });
+                break;
+            case ForbiddenException forbiddenException:
+                code = HttpStatusCode.Forbidden;
+                result = JsonConvert.SerializeObject(new ErrorDto { Message = forbiddenException.Message });
+                break;
+            case NotFoundException _:
+                code = HttpStatusCode.NotFound;
+                break;
+            default:
+                code = HttpStatusCode.InternalServerError;
+                result = JsonConvert.SerializeObject(new ErrorDto { Message = exception.Message, Details = exception.StackTrace });
+                _logger.LogError(exception, exception.Message);
+                break;
+        }
+
+        context.Response.ContentType = "application/json";
+        context.Response.StatusCode = (int)code;
+
+        await context.Response.WriteAsync(result);
     }
 }

@@ -1,5 +1,33 @@
 <section class="members">
    <div class="members-container">
-    
+      <div class="members__no-items"
+           *ngIf="members.length < 1"
+      >
+         <span>
+            У вас нету членов группы
+         </span>
+      </div> 
+   
+
+   <div 
+      class="members__items"
+      *ngFor="let member of members"
+   >
+   <members-item
+      [firstName]="member.firstName"
+      [secondName]="member.secondName"
+      [email]="member.email"
+      [type]="member.type"
+      (acceptClick)="onMemberAcceptCliced(member.id)"
+      (declineClick)="onMemberDeclineCliced(member.id)"
+      (deleteClick)="onMemberDeleteliced(member.id)">
+   </members-item>
    </div>
+
+   <div class="add-member-btn">
+      <button (click)="onAddNewClicked()">
+         Add
+      </button>
+   </div>
+</div>
 </section>

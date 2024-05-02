@@ -757,6 +757,98 @@ export class MyNotesAPIClient {
     }
 
     /**
+     * @param hasMembers (optional) 
+     * @param excludeCurrent (optional) 
+     * @param searchPattern (optional) 
+     * @param onlyCurrentUserMembers (optional) 
+     * @return Success
+     */
+    getUsers(hasMembers: boolean | undefined, excludeCurrent: boolean | undefined, searchPattern: string | undefined, onlyCurrentUserMembers: boolean | undefined): Observable<SwaggerResponse<UserDto[]>> {
+        let url_ = this.baseUrl + "/api/users?";
+        if (hasMembers === null)
+            throw new Error("The parameter 'hasMembers' cannot be null.");
+        else if (hasMembers !== undefined)
+            url_ += "HasMembers=" + encodeURIComponent("" + hasMembers) + "&";
+        if (excludeCurrent === null)
+            throw new Error("The parameter 'excludeCurrent' cannot be null.");
+        else if (excludeCurrent !== undefined)
+            url_ += "ExcludeCurrent=" + encodeURIComponent("" + excludeCurrent) + "&";
+        if (searchPattern === null)
+            throw new Error("The parameter 'searchPattern' cannot be null.");
+        else if (searchPattern !== undefined)
+            url_ += "SearchPattern=" + encodeURIComponent("" + searchPattern) + "&";
+        if (onlyCurrentUserMembers === null)
+            throw new Error("The parameter 'onlyCurrentUserMembers' cannot be null.");
+        else if (onlyCurrentUserMembers !== undefined)
+            url_ += "OnlyCurrentUserMembers=" + encodeURIComponent("" + onlyCurrentUserMembers) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetUsers(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetUsers(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<SwaggerResponse<UserDto[]>>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<SwaggerResponse<UserDto[]>>;
+        }));
+    }
+
+    protected processGetUsers(response: HttpResponseBase): Observable<SwaggerResponse<UserDto[]>> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(UserDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(new SwaggerResponse(status, _headers, result200));
+            }));
+        } else if (status === 401) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result401: any = null;
+            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result401 = ErrorDto.fromJS(resultData401);
+            return throwException("Unauthorized", status, _responseText, _headers, result401);
+            }));
+        } else if (status === 500) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result500: any = null;
+            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result500 = ErrorDto.fromJS(resultData500);
+            return throwException("Server Error", status, _responseText, _headers, result500);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SwaggerResponse<UserDto[]>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
      * @param body (optional) 
      * @return No Content
      */

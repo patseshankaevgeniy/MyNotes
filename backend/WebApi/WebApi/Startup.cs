@@ -28,18 +28,12 @@ public class Startup
     public Startup(IConfiguration configuration)
     {
         _configuration = configuration;
-
-        Log.Logger = new LoggerConfiguration()
-            .ReadFrom.Configuration(_configuration)
-            .CreateLogger();
-
-        Log.Information("Starting up");
     }
 
     public void ConfigureServices(IServiceCollection services)
     {
         // Application dependencies
-        services.AddApplicationDependencies()
+        services.AddApplicationDependencies(_configuration)
                 .AddInfrastructureDependencies(_configuration)
                 .AddSignalRDependencies(_configuration)
                 .AddPersistenceDependencies(_configuration);
@@ -50,9 +44,13 @@ public class Startup
             .AddAutoMapper(Assembly.GetExecutingAssembly())
             .AddControllers()
             .AddJsonOptions(options =>
-                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())); ;
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
-        services.AddCors(opt => opt.AddDefaultPolicy(b => b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
+        services.AddCors(opt => opt
+                                .AddDefaultPolicy(b => b
+                                                        .AllowAnyHeader()
+                                                        .AllowAnyMethod()
+                                                        .AllowAnyOrigin()));
 
         // Configure Identity
         services

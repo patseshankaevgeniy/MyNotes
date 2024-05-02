@@ -1,1 +1,50 @@
-<div> Member item</div>
+<div class="member-container">
+    <div class="member-name">
+      <span> {{ firstName }} {{ secondName }}</span>  
+    </div>
+    <div class="member-email">
+       <span> {{ email }}</span>
+    </div>
+    <div class="member-actions"
+        [ngSwitch]="type"
+    >
+        <div class="action-approved"
+        *ngSwitchCase="'approved'"
+        (click)="onDeleteClick()"
+        >
+            <span>H</span>
+            <div
+                class="action-approved-label"
+            >Удалить</div>
+        </div>
+
+        <div
+        class="action-wait-for-approval"
+        *ngSwitchCase="'waitForApproval'">
+            <span>Ожидайте подтверждения</span>
+            <button (click)=" onDeleteClick()">Отмена</button>
+        </div>
+
+        <div
+        class="action-required-approval-accept"
+        *ngSwitchCase="'requiredApproval'"
+        (click)="onAcceptClick()">
+            <span>K</span>
+            <div
+            class="action-required-approval-accept-label"
+            >Принять</div>
+        </div>
+
+        <div
+        class="action-required-approval-cancel"
+        *ngSwitchCase="'requiredApproval'"
+        (click)="onDeclineClick()">
+    
+
+            <div
+            class="action-required-approval-cancel-label"
+            >Отколнить
+            </div>
+        </div>
+    </div>
+</div>

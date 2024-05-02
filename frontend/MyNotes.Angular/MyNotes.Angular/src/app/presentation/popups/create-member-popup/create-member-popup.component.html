@@ -1,0 +1,17 @@
+
+<div class="members-box">
+    <div class="search-input">
+        <input type="search" [(ngModel)]="searchText" (ngModelChange)="onSearchChanged(searchText)" />
+        <button (click)="onSearchChanged(searchText)">Search</button>
+    </div>
+
+    <div class="members-list">
+        <div class="member-item" *ngFor="let member of members" (click)="onMemberClick(member.userId)">
+            <div class="member-name">{{member.firstName}}</div>
+        </div>
+    </div>
+
+    <div class="add-btn">
+        <button (click)="onAddClicked()">Add</button>
+    </div>
+</div>
