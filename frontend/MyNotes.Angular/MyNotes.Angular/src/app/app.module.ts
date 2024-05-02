@@ -13,8 +13,8 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { MatRippleModule } from '@angular/material/core';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -22,11 +22,13 @@ import { MatDialogModule } from '@angular/material/dialog';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     ExpPagesModule,
     HttpClientModule,
     SocialLoginModule,
     FormsModule,
+    MatSlideToggleModule,
     NgxSkeletonLoaderModule.forRoot(),
     JwtModule.forRoot({
       config: {

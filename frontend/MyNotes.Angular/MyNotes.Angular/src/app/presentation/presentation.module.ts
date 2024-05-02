@@ -10,9 +10,10 @@ import { HeaderModule } from "./layouts/header/header.module";
 import { NavigationBarModule } from "./layouts/navigation-bar/navigation-bar.module";
 import { AppRoutingModule } from "../app-routing.module";
 import { BrowserModule } from "@angular/platform-browser";
-import { AddUserNoteComponent } from './popups/add-user-note/add-user-note.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MaterialModule } from "./shared/material/material.module";
+import { CreateMemberPopupComponent } from './popups/create-member-popup/create-member-popup.component';
+import { AddUserNotePopupModule } from "./popups/add-user-note/add-user-note.module";
 
 
 @NgModule({
@@ -20,7 +21,7 @@ import { MaterialModule } from "./shared/material/material.module";
         AppLayoutComponent,
         AuthLayoutComponent,
         SettingsLayoutComponent,
-        AddUserNoteComponent,
+        CreateMemberPopupComponent,
     ],
     imports: [
         LogInModule,
@@ -33,7 +34,9 @@ import { MaterialModule } from "./shared/material/material.module";
         BrowserModule,
         MaterialModule,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
+        AddUserNotePopupModule
+        
     ],
     providers: [
 
@@ -45,7 +48,8 @@ import { MaterialModule } from "./shared/material/material.module";
         NotesModule,
         ReactiveFormsModule,
         MaterialModule,
-        FormsModule
+        FormsModule,
+        AddUserNotePopupModule
     ]
 })
 

@@ -12,7 +12,7 @@ export class MembersItemComponent {
   @Input() firstName?: string;
   @Input() secondName?: string;
   @Input() email?: string;
-  @Input() imageSrc?: string;
+  //@Input() imageSrc?: string;
   @Input() type?: MembersItemType;
 
   @Output() acceptClick = new EventEmitter<string>();

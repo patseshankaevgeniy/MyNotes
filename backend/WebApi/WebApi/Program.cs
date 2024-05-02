@@ -5,8 +5,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Persistence;
 using Persistence.Infrastructure;
+using Serilog;
 using System;
 using System.Threading.Tasks;
+using NewRelic.LogEnrichers.Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace WebApi
 {
@@ -35,6 +38,21 @@ namespace WebApi
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
               Host.CreateDefaultBuilder(args)
-                  .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
+                  .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>())
+                .ConfigureLogging((hostBuilder, loggingBuilder) =>
+                {
+                    var configuration = hostBuilder.Configuration;
+                    var connectionString = configuration["ApplicationInsights:ConnectionString"];
+
+                    var logger = new LoggerConfiguration()
+                        .ReadFrom.Configuration(hostBuilder.Configuration)
+                        .Enrich.FromLogContext()
+                        .Enrich.WithNewRelicLogsInContext()
+                        .CreateLogger();
+
+                    loggingBuilder.ClearProviders();
+                    loggingBuilder.AddSerilog(logger);
+
+                });
     }
 }

@@ -11,8 +11,8 @@ namespace Application.Auth.Commands;
 
 public sealed class LogInCommand : IRequest<LogInResultModel>
 {
-    public string Email { get; set; }
-    public string Password { get; set; }
+    public string? Email { get; set; }
+    public string? Password { get; set; }
 }
 
 public sealed class LogInCommandValidator : AbstractValidator<LogInCommand>

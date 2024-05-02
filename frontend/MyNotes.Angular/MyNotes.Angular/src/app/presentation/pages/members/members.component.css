@@ -6,5 +6,18 @@
 }
 
 .members-container{
-    padding: 10px 20px;
+    height: 100%;
+    padding: 50px;
+    position: relative;
+}
+
+.members__no-items span{
+    color: white;
+    font-size: 30px;
+}
+
+.add-member-btn{
+    position: absolute;
+    top: 75%;
+    left: 70%;
 }

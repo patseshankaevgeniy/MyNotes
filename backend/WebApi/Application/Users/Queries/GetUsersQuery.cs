@@ -13,7 +13,8 @@ namespace Application.Users.Queries;
 public sealed record GetUsersQuery : IRequest<IEnumerable<UserModel>>
 {
     public bool? HasMembers { get; init; }
-    public string SearchPattern { get; init; }
+    public string? SearchPattern { get; init; }
+    public bool? ExcludeCurrent { get; init; }
     public bool? OnlyCurrentUserMembers { get; init; }
 }
 
@@ -51,6 +52,12 @@ public sealed class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, IEnume
         {
             dbQuery = dbQuery
                 .Where(u => _currentUserService.UserGroupMembersIds.Contains(u.Id));
+        }
+
+        if (query.ExcludeCurrent.HasValue && query.ExcludeCurrent.Value)
+        {
+            dbQuery = dbQuery
+                .Where(u => u.Id != _currentUserService.UserId);
         }
 
         if (query.HasMembers.HasValue)

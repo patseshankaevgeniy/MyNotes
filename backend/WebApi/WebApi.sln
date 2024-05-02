@@ -18,7 +18,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "Persistence\Persistence.csproj", "{A8037C20-68F9-4415-B3EA-FC454729E835}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalR", "SignalR\SignalR.csproj", "{42E5C3FF-FEE2-4CFE-96E3-E60F21AD01A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SignalR", "SignalR\SignalR.csproj", "{42E5C3FF-FEE2-4CFE-96E3-E60F21AD01A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{B4246DE8-63F8-4BB6-AAE5-07187F641AD8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F1C25D87-DEA0-455D-B30F-8473B5930632} = {F1C25D87-DEA0-455D-B30F-8473B5930632}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +55,10 @@ Global
 		{42E5C3FF-FEE2-4CFE-96E3-E60F21AD01A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42E5C3FF-FEE2-4CFE-96E3-E60F21AD01A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42E5C3FF-FEE2-4CFE-96E3-E60F21AD01A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4246DE8-63F8-4BB6-AAE5-07187F641AD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4246DE8-63F8-4BB6-AAE5-07187F641AD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4246DE8-63F8-4BB6-AAE5-07187F641AD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4246DE8-63F8-4BB6-AAE5-07187F641AD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
