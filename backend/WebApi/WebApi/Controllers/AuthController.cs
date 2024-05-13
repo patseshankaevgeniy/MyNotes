@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WebApi.Models.Auth;
 using WebApi.Models.Common;
+using WebApi.Models.TelegramBot;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace WebApi.Controllers;
@@ -44,21 +45,21 @@ public sealed class AuthController : ControllerBase
         return Ok(_mapper.Map<LogInResultDto>(model));
     }
 
-    //[AllowAnonymous]
-    //[HttpPost("log-in-with-telegram-user", Name = "LogInWithTelegramUser")]
-    //[ProducesResponseType(Status200OK, Type = typeof(LogInResultDto))]
-    //[ProducesResponseType(Status400BadRequest, Type = typeof(ErrorDto))]
-    //[ProducesResponseType(Status500InternalServerError, Type = typeof(ErrorDto))]
-    //public async Task<ActionResult<LogInResultDto>> LogInWithTelegramUserAsync(TelegramUserLogInDto dto)
-    //{
-    //    var command = new LoginWithTelegramUserCommand
-    //    {
-    //        TelegramUserId = dto.TelegramUserId
-    //    };
+    [AllowAnonymous]
+    [HttpPost("log-in-with-telegram-user", Name = "LogInWithTelegramUser")]
+    [ProducesResponseType(Status200OK, Type = typeof(LogInResultDto))]
+    [ProducesResponseType(Status400BadRequest, Type = typeof(ErrorDto))]
+    [ProducesResponseType(Status500InternalServerError, Type = typeof(ErrorDto))]
+    public async Task<ActionResult<LogInResultDto>> LogInWithTelegramUserAsync(TelegramUserLogInDto dto)
+    {
+        var command = new LoginWithTelegramUserCommand
+        {
+            TelegramUserId = dto.TelegramUserId
+        };
 
-    //    var model = await _mediator.Send(command);
-    //    return Ok(_mapper.Map<LogInResultDto>(model));
-    //}
+        var model = await _mediator.Send(command);
+        return Ok(_mapper.Map<LogInResultDto>(model));
+    }
 
     //[AllowAnonymous]
     //[HttpPost("log-in-with-external-provider", Name = "LogInWithExternalProvider")]
@@ -87,8 +88,7 @@ public sealed class AuthController : ControllerBase
         var command = new SignUpCommand
         {
             Email = dto.Email,
-            FirstName = dto.FirstName,
-            SecondName = dto.SecondName,
+            UserName = dto.UserName,
             Password = dto.Password
         };
 

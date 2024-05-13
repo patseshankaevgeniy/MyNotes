@@ -17,8 +17,8 @@ public sealed class CreateUserCommand : IRequest<UserModel>
 {
     public Guid? Id { get; init; }
     public string UserName { get; init; }
-    public string FirstName { get; init; }
-    public string SecondName { get; init; }
+    public string? FirstName { get; init; }
+    public string? SecondName { get; init; }
     public Guid? LanguageId { get; init; }
     public Guid? CurrencyId { get; init; }
     public string Email { get; set; }
@@ -31,7 +31,6 @@ public sealed class CreateUserCommandValidator : AbstractValidator<CreateUserCom
     public CreateUserCommandValidator()
     {
         RuleFor(u => u.UserName).NotEmpty();
-        RuleFor(u => u.FirstName).NotEmpty();
         RuleFor(u => u.Email).NotEmpty();
     }
 }
@@ -68,7 +67,7 @@ public sealed class CreateUserCommandHandler : IRequestHandler<CreateUserCommand
             Id = command.Id ?? _guidService.NewGuid(),
             Email = command.Email!,
             UserName = command.UserName!,
-            FirstName = command.FirstName!,
+            FirstName = command.FirstName ?? string.Empty,
             SecondName = command.SecondName ?? string.Empty,
             LanguageId = command.LanguageId ?? _constantsService.DefaultLanguageId,
             ImageId = command.ImageId ?? _constantsService.DefaultImageId,

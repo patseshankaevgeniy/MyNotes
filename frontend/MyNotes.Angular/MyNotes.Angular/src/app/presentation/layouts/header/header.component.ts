@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { IHeaderNavigationItem } from "./header.model";
 import { NavigationEnd, Router } from "@angular/router";
+import { AuthenticationService } from "../../../services/auth/authentication.service";
 
 @Component({
     selector: 'header-panel',
@@ -40,6 +41,7 @@ import { NavigationEnd, Router } from "@angular/router";
 
     constructor(
       private readonly router: Router,
+      private readonly authService: AuthenticationService
     ){
       router.events.subscribe(event => {
         if (event instanceof NavigationEnd) {
@@ -64,5 +66,9 @@ import { NavigationEnd, Router } from "@angular/router";
         (item) => (item.selected = item.name == navigationItem.name)
       );
       this.router.navigateByUrl(navigationItem.navigationPath);
+    }
+
+    signOut(){
+      this.authService.signOut();
     }
   }

@@ -1,6 +1,7 @@
 ﻿using Application.UserNotes.Commands;
 using Application.UserNotes.Queries;
 using AutoMapper;
+using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -53,7 +54,8 @@ namespace WebApi.Controllers
                 CreatorId = dto.UserId,
                 Priority = dto.Priority,
                 Text = dto.Text,
-                Сompletion = dto.Сompletion
+                Сompletion = dto.Сompletion,
+                Source = Source.WebApp
             };
             var model = await _mediator.Send(command);
 

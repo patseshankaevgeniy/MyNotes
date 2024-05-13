@@ -2,6 +2,7 @@ import { SocialLoginModule } from '@abacritt/angularx-social-login';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { SignUpComponent } from './sign-up.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -9,7 +10,8 @@ import { SignUpComponent } from './sign-up.component';
   ],
   imports: [
     CommonModule,
-    SocialLoginModule
+    SocialLoginModule,
+    FormsModule
   ],
   exports: [
     SignUpComponent

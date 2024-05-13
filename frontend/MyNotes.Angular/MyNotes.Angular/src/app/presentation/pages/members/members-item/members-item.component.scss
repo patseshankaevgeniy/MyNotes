@@ -1,6 +1,60 @@
-span{
+.member-container{
+
+    display: flex;
+
+    div{
+        margin-left: 10px;
+    }
+    span{
         color: white;
     }
+
+    .member-actions{
+        display: flex;
+
+        .action-approved-label{
+            color: red;
+            
+
+            &:hover{
+                cursor: pointer;
+                font-size: 16px;
+            }
+        }
+
+        .action-required-approval-accept-label{
+            background-color: rgba(71, 220, 71, 0.6);
+            border-radius: 5px;
+            height: 25px;
+            width: 80px;
+            text-align: center;
+            padding-top: 3px;
+            margin-right: 10px;
+            margin-left: 30px;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        .action-required-approval-cancel-label{
+            background-color: rgba(235, 53, 53, 0.6);
+            border-radius: 5px;
+            height: 25px;
+            width: 80px;
+            text-align: center;
+            padding-top: 3px;
+            margin-right: 20px;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+
+
 
 
 

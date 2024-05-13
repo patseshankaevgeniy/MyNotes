@@ -22,10 +22,12 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class AddUserNoteComponent {
 
 
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  emailFormControl = new FormControl('', [Validators.required]);
 
   matcher = new MyErrorStateMatcher();
   
+
+  checkWithoutDate: boolean = false;
   // public fileTypes = Object.values(NotePriority);
   // public noteText: string = '';
   // public notePriority!: NotePriority;

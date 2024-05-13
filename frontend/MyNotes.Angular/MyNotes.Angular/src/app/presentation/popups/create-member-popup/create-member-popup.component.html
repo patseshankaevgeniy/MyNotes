@@ -7,11 +7,11 @@
 
     <div class="members-list">
         <div class="member-item" *ngFor="let member of members" (click)="onMemberClick(member.userId)">
-            <div class="member-name">{{member.firstName}}</div>
+            <div class="member-name">{{member.email}}</div>
         </div>
     </div>
 
     <div class="add-btn">
-        <button (click)="onAddClicked()">Add</button>
+        <button (click)="onAddClicked()" [disabled]="addButtonDisabled">Add</button>
     </div>
 </div>

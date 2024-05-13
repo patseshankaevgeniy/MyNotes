@@ -21,17 +21,22 @@
 </div>
  -->
 
- <form class="example-form">
-  <mat-form-field class="example-full-width">
-    <mat-label>Email</mat-label>
-    <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
-           placeholder="Ex. pat@example.com">
-    <mat-hint>Errors appear instantly!</mat-hint>
-    @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
-      <mat-error>Please enter a valid email address</mat-error>
-    }
-    @if (emailFormControl.hasError('required')) {
-      <mat-error>Email is <strong>required</strong></mat-error>
-    }
-  </mat-form-field>
+ <form class="user-note-form">
+  <div class="text">
+    <input class="" type="text" placeholder="Your note"/>
+  </div>  
+  
+  <div class="finished-date" >
+    <div class="date" [hidden]="checkWithoutDate">
+      <label>Finished</label>
+      <input type="datetime-local"/>
+    </div>
+    
+    <div class="check-without-date">
+      
+      <input type="checkbox" [checked]="checkWithoutDate"
+      (change)="checkWithoutDate = !checkWithoutDate"/>
+     <span>Не добавлять время</span>
+    </div>
+  </div>
 </form>

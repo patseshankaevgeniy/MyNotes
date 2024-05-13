@@ -23,7 +23,7 @@ export class NotesComponent implements OnInit{
     ){}
 
     ngOnInit(): void {
-        //this.loadUserNotes();
+        this.loadUserNotes();
     }
 
     private loadUserNotes(){
@@ -41,5 +41,9 @@ export class NotesComponent implements OnInit{
 
         const result = await dialogref.afterClosed().toPromise();
         return result;
+    }
+
+    saveChanges(){
+        
     }
 }
