@@ -24,6 +24,12 @@ export class UserNoteService{
             .pipe(map(({ result }) => this.mapToModel(result)));
     }
 
+    deleteUserNote(userNoteId: string): Observable<void>{
+        return this.userNoteApiclient
+            .deleteUserNote(userNoteId)
+            .pipe(map(_ => { }));
+    }
+
     
 
     private mapToModel(dto: IUserNoteDto): UserNoteModel {

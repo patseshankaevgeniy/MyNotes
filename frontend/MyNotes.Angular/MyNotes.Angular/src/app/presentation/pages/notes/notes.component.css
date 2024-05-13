@@ -27,7 +27,7 @@
     display: flex;
     padding: 0 10px;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     background-color: rgba(0, 0, 0, .9);
     border-radius: 5px;
     margin-bottom: 10px;
@@ -64,13 +64,6 @@
     width: 600px;
 }
 
-.header-item.hi-priority{
-    width: 49px;
-}
-
-.header-item.hi-ended{
-    width: 50px;
-}
 
 .header-item.hi-actual{
     width: 65px;
@@ -80,7 +73,7 @@
     display: flex;
     padding: 0 10px;
     margin-bottom: 3px;
-    justify-content: space-between;
+    justify-content: space-around;
     background-color: rgba(0, 0, 0, .9);
     border-radius: 5px;
 }

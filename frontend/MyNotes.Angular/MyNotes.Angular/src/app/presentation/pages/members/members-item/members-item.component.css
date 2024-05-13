@@ -1,0 +1,44 @@
+.member-container {
+  display: flex;
+}
+.member-container div {
+  margin-left: 10px;
+}
+.member-container span {
+  color: white;
+}
+.member-container .member-actions {
+  display: flex;
+}
+.member-container .member-actions .action-approved-label {
+  color: red;
+}
+.member-container .member-actions .action-approved-label:hover {
+  cursor: pointer;
+  font-size: 16px;
+}
+.member-container .member-actions .action-required-approval-accept-label {
+  background-color: rgba(71, 220, 71, 0.6);
+  border-radius: 5px;
+  height: 25px;
+  width: 80px;
+  text-align: center;
+  padding-top: 3px;
+  margin-right: 10px;
+  margin-left: 30px;
+}
+.member-container .member-actions .action-required-approval-accept-label:hover {
+  cursor: pointer;
+}
+.member-container .member-actions .action-required-approval-cancel-label {
+  background-color: rgba(235, 53, 53, 0.6);
+  border-radius: 5px;
+  height: 25px;
+  width: 80px;
+  text-align: center;
+  padding-top: 3px;
+  margin-right: 20px;
+}
+.member-container .member-actions .action-required-approval-cancel-label:hover {
+  cursor: pointer;
+}/*# sourceMappingURL=members-item.component.css.map */

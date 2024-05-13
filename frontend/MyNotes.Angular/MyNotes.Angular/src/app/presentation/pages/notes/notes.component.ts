@@ -3,7 +3,6 @@ import { UserNoteModel } from "../../../models/user-note-model";
 import { UserNoteService } from "../../../services/user-notes/user-notes-service";
 import { MatDialog } from "@angular/material/dialog";
 import { AddUserNoteComponent } from "../../popups/add-user-note/add-user-note.component";
-import { CreateMemberPopupComponent } from "../../popups/create-member-popup/create-member-popup.component";
 
 @Component({
     selector: 'notes',
@@ -43,7 +42,11 @@ export class NotesComponent implements OnInit{
         return result;
     }
 
+    changeActual(userNote: UserNoteModel, event: any){
+        this.userNoteService.deleteUserNote(userNote.id).subscribe();
+    }
+
     saveChanges(){
-        
+        this.ngOnInit();
     }
 }

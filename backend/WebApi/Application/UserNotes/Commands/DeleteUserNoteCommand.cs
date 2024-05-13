@@ -41,7 +41,9 @@ public sealed class DeleteUserNoteCommandHandler: IRequestHandler<DeleteUserNote
             throw new NotFoundException(nameof(UserNote), command.Id!);
         }
 
-        _db.UserNotes.Remove(userNote);
+        userNote.IsActual = false;
+
+        _db.UserNotes.Update(userNote);
         await _db.SaveChangesAsync();
 
         return Unit.Value;

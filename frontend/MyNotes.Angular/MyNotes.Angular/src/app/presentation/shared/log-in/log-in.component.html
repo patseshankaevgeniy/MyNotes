@@ -13,13 +13,18 @@
         <h2>MY   NOTES</h2>
       </div>
       <div class="info-text">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet earum at, sit debitis placeat reiciendis dolore. Omnis possimus incidunt et! Possimus repellat a dolorem error laudantium eaque. Sit, nobis culpa!</p>
+        <p i18n>This application 
+          will help you not to 
+          keep the most important 
+          tasks in your head, and 
+          also plan your day wisely
+        </p>
       </div>
     </div>
   </div>
 
 <div class="login-box">
-    <h2>Login</h2>
+    <h2 i18n>Login</h2>
     <form>
       <div class="user-box">
         <input 
@@ -28,7 +33,7 @@
           [ngModelOptions]="{standalone: true}"
           [(ngModel)]="email"
         >
-        <label>Username</label>
+        <label i18n>Username</label>
       </div>
       <div class="user-box">
         <input 
@@ -37,10 +42,10 @@
           [(ngModel)]="password"
          
         >
-        <label>Password</label>
+        <label i18n>Password</label>
       </div>
       <div class="login-box-actions">
-        <button (click)="onLoginClicked()">
+        <button (click)="onLoginClicked()" i18n>
           <span></span>
           <span></span>
           <span></span>
@@ -48,7 +53,7 @@
           Submit
         </button>
 
-        <a href="registration">Registration</a>
+        <a href="registration" i18n>Registration</a>
       </div>
     </form>
   </div>
