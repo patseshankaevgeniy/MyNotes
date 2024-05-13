@@ -1,0 +1,16 @@
+{
+    "LOGIN":{
+        "UserName": "UserName",
+        "Password": "Password",
+        "Log-in": "Login",
+        "Registration": "Registration",
+        "Info-text": "This application will help you not to keep the most important tasks in your head, and also plan your day wisely",
+        "Enter": "Enter"
+    },
+    "BUTTON":{
+        "LANG": {
+            "RU": "Russian",
+            "EN": "English"
+        }
+    }
+}

@@ -21,15 +21,15 @@
 </div>
  -->
 
- <form class="user-note-form">
+ <div class="user-note-form">
   <div class="text">
-    <input class="" type="text" placeholder="Your note"/>
+    <input type="text" placeholder="Your note" [(ngModel)] ="noteText"/>
   </div>  
   
   <div class="finished-date" >
     <div class="date" [hidden]="checkWithoutDate">
       <label>Finished</label>
-      <input type="datetime-local"/>
+      <input type="datetime-local" [(ngModel)]="dateSelected"/>
     </div>
     
     <div class="check-without-date">
@@ -39,4 +39,8 @@
      <span>Не добавлять время</span>
     </div>
   </div>
-</form>
+
+  <div>
+    <button (click)="submit()" >Добавить </button>
+  </div>
+</div>

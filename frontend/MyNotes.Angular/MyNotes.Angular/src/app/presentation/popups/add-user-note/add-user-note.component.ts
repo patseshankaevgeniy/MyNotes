@@ -21,35 +21,32 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class AddUserNoteComponent {
 
-
-  emailFormControl = new FormControl('', [Validators.required]);
-
   matcher = new MyErrorStateMatcher();
   
 
   checkWithoutDate: boolean = false;
-  // public fileTypes = Object.values(NotePriority);
-  // public noteText: string = '';
-  // public notePriority!: NotePriority;
-  // public dateSelected: any;
-  // public newUserNote!: UserNoteModel;
+  public fileTypes = Object.values(NotePriority);
+  public noteText: string = '';
+  public notePriority: NotePriority = NotePriority.High;
+  public dateSelected: any;
+  public newUserNote!: UserNoteModel;
     
-  // constructor(
-  //   private dialogRef: MatDialogRef<AddUserNoteComponent>,
-  //   private userNoteService: UserNoteService){}
+  constructor(
+    private dialogRef: MatDialogRef<AddUserNoteComponent>,
+    private userNoteService: UserNoteService){}
 
 
 
-  // submit(){
-  //   const userNote: UserNoteDto = new UserNoteDto ({
-  //     priority: this.notePriority,
-  //     text: this.noteText,
-  //     сompletion: new Date(this.dateSelected)
-  //   })
+  submit(){
+    const userNote: UserNoteDto = new UserNoteDto ({
+      priority: this.notePriority,
+      text: this.noteText,
+      сompletion: new Date(this.dateSelected)
+    })
 
-  //  this.userNoteService.createUserNote(userNote).subscribe((userNote) => (this.newUserNote = userNote))
-  //   this.dialogRef.close(this.newUserNote);
-  // }
+   this.userNoteService.createUserNote(userNote).subscribe((userNote) => (this.newUserNote = userNote))
+    this.dialogRef.close(this.newUserNote);
+  }
 }
 
 

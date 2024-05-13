@@ -47,10 +47,6 @@ export class SignUpComponent {
   }
 
   onRegistrationClicked() {
-    if (!this.isFormValid()) {
-      return;
-    }
-
     this.authService
       .signUp( this.email, this.password, this.userName)
       .subscribe(({ succeeded, failureReason }) => {
@@ -72,56 +68,5 @@ export class SignUpComponent {
 
   onLogInAccountClicked() {
     this.router.navigate([loginPath])
-  }
-
-  onKeyDown(event: KeyboardEvent) {
-    const regex = /[\p{Alpha}\p{M}\p{Join_C}]/gu;
-    const specialKeys: Array<string> = [
-      'Backspace',
-      'Tab',
-      'End',
-      'Home',
-      'ArrowLeft',
-      'ArrowRight',
-      'Del',
-      'Delete',
-    ];
-
-    if (!event.key.match(regex) && !specialKeys.includes(event.key)) {
-      event.preventDefault();
-      return;
-    }
-  }
-
-  private isFormValid() {
-    var isValid = true;
-
-    const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g; /////////////
-    let result = regex.test(this.email);
-
-    if (this.isUserNameInvalid) {
-      isValid = false;
-    } else if (!this.userName || this.userName == ' ' || this.userName.length === 1) {
-      this.userNameErrorMessage = 'Пожалуйста проверьте ваше Имя';
-      this.isUserNameInvalid = true;
-      isValid = false;
-    }
-
-    if (this.isEmailInvalid) {
-      isValid = false;
-    } else if (!this.email || this.email == ' ' || result == false) {
-      this.emailErrorMessage = 'Пожалуйста введите email';
-      this.isEmailInvalid = true;
-      isValid = false;
-    }
-
-    if (this.isPasswordInvalid) {
-      isValid = false;
-    } else if (!this.password || this.password == ' ' || (this.password.length < 6)) {
-      this.passwordErrorMessage = 'Пожалуйста проверьте пароль';
-      this.isPasswordInvalid = true;
-      isValid = false;
-    }
-    return isValid;
   }
 }

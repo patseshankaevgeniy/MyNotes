@@ -1,0 +1,71 @@
+@keyframes gradient {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}
+.user-note-form {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.user-note-form .text {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-width: 300px;
+  margin: 50px auto 20px;
+  padding: 10px;
+  border-radius: 2px;
+  background: rgba(57, 63, 84, 0.8);
+}
+.user-note-form .text:after {
+  content: "";
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 999;
+  height: 2px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  background-position: 0% 0%;
+  background: linear-gradient(to right, #B294FF, #57E6E6, #FEFFB8, #57E6E6, #B294FF, #57E6E6);
+  background-size: 500% auto;
+  animation: gradient 3s linear infinite;
+}
+.user-note-form .text input {
+  flex-grow: 1;
+  color: #BFD2FF;
+  line-height: 2rem;
+  vertical-align: middle;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+}
+.user-note-form .text input::-webkit-input-placeholder {
+  color: #7881A1;
+  outline: none;
+  border: none;
+}
+.user-note-form .finished-date .date {
+  align-items: center;
+  margin: 0 45px 20px;
+}
+.user-note-form .finished-date .date label {
+  font-size: 20px;
+  color: rgba(70, 183, 248, 0.8);
+  margin-right: 40px;
+}
+.user-note-form .finished-date .date input {
+  line-height: 2.5rem;
+  background-color: rgba(57, 63, 84, 0.8);
+  color: #BFD2FF;
+  border: none;
+}
+.user-note-form .check-without-date span {
+  color: rgba(70, 183, 248, 0.8);
+}/*# sourceMappingURL=add-user-note.component.css.map */

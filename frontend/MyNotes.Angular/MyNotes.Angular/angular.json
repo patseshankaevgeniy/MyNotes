@@ -4,7 +4,9 @@
   "newProjectRoot": "projects",
   "projects": {
     "MyNotes.Angular": {
+      
       "projectType": "application",
+      
       "schematics": {
         "@schematics/angular:component": {
           "standalone": false
@@ -16,6 +18,7 @@
           "standalone": false
         }
       },
+      
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -23,6 +26,8 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "localize": true, 
+            "i18nMissingTranslation": "error",
             "outputPath": "dist/my-notes.angular",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -41,6 +46,7 @@
             "scripts": []
           },
           "configurations": {
+            
             "production": {
               "budgets": [
                 {
@@ -73,15 +79,11 @@
             "development": {
               "buildTarget": "MyNotes.Angular:build:development"
             }
+           
           },
           "defaultConfiguration": "development"
         },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "buildTarget": "MyNotes.Angular:build"
-          }
-        },
+        
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
