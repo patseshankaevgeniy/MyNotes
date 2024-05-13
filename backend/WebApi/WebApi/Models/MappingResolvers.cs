@@ -1,7 +1,10 @@
 ﻿using Application.Common.Interfaces;
+using Application.TelegramBot.Auth.Models;
 using Application.Users.Models;
 using AutoMapper;
+using Telegram.Bot;
 using WebApi.Models.Auth;
+using WebApi.Models.TelegramBot;
 
 namespace WebApi.Models;
 
@@ -35,21 +38,19 @@ public sealed class UserImageUrlResolver : IValueResolver<UserModel, UserDto, st
 //    }
 //}
 
-//public sealed class TelegramAuthCodeLinkResolver : IValueResolver<TelegramAuthCodeModel, TelegramAuthCodeDto, string>
-//{
-//    private readonly TelegraBotOptions _telegramBotOptions;
-//    private readonly ITelegramBotClient _telegramBotClient;
+public sealed class TelegramAuthCodeLinkResolver : IValueResolver<TelegramAuthCodeModel, TelegramAuthCodeDto, string>
+{
+    private readonly ITelegramBotClient _telegramBotClient;
 
-//    public TelegramAuthCodeLinkResolver(
-//        IOptions<TelegraBotOptions> options,
-//        ITelegramBotClient telegramBotClient)
-//    {
-//        _telegramBotOptions = options.Value;
-//        _telegramBotClient = telegramBotClient;
-//    }
+    public TelegramAuthCodeLinkResolver(
+        ITelegramBotClient telegramBotClient)
+    {
+        _telegramBotClient = telegramBotClient;
+    }
 
-//public string Resolve(TelegramAuthCodeModel source, TelegramAuthCodeDto ___, string __, ResolutionContext _)
-//{
-//    var bot = _telegramBotClient.GetMeAsync().GetAwaiter().GetResult();
-//    return string.Format(_telegramBotOptions.LinkTemplate, bot.Username, source.LinkCode);
-//}
+    public string Resolve(TelegramAuthCodeModel source, TelegramAuthCodeDto ___, string __, ResolutionContext _)
+    {
+        var bot = _telegramBotClient.GetMeAsync().GetAwaiter().GetResult();
+        return string.Format(bot.Username, source.LinkCode);
+    }
+}

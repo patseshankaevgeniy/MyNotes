@@ -16,6 +16,7 @@ public sealed class CreateUserNoteCommand : IRequest<UserNoteModel>
     public Guid? CreatorId { get; init; }
     public NotePriority Priority { get; init; }
     public DateTime? Сompletion { get; set; }
+    public Source Source { get; init; }
 }
 
 public sealed class CreateUserNoteCommandValidator : AbstractValidator<CreateUserNoteCommand>

@@ -13,13 +13,9 @@ import { loginPath } from '../../../app-routing.module';
 export class SignUpComponent {
   @HostBinding('class.sign-up') host = true;
   
-  firstName = '';
-  isFirstNameInvalid = false;
-  firstNameErrorMessage = '';
-
-  secondName = '';
-  isSecondNameInvalid = false;
-  secondNameErrorMessage = '';
+  userName = '';
+  isUserNameInvalid = false;
+  userNameErrorMessage = '';
 
   email = '';
   isEmailInvalid = false;
@@ -29,26 +25,16 @@ export class SignUpComponent {
   isPasswordInvalid = false;
   passwordErrorMessage = '';
 
-  isPoliticsAgree = false;
-  isPoliticsInvalid = false;
-  politicsErrorMessage = '';
 
   constructor(
     private router: Router,
     private authService: AuthenticationService
   ) { }
 
-  onPoliticsAgreeCheck() {
-    this.isPoliticsAgree = !this.isPoliticsAgree
-    this.isPoliticsInvalid = false
-  }
 
-  onFirstNameChanged(firstName: string) {
-    this.firstName = firstName;
-  }
 
-  onSecondNameChanged(secondName: string) {
-    this.secondName = secondName;
+  onUserNameChanged(firstName: string) {
+    this.userName = firstName;
   }
 
   onEmailChanged(email: string) {
@@ -66,7 +52,7 @@ export class SignUpComponent {
     }
 
     this.authService
-      .signUp(this.firstName, this.secondName, this.email, this.password)
+      .signUp( this.email, this.password, this.userName)
       .subscribe(({ succeeded, failureReason }) => {
         if (!succeeded) {
           switch (failureReason) {
@@ -82,18 +68,6 @@ export class SignUpComponent {
           }
         }
       });
-  }
-
-  onLoginWithAppleClicked() {
-    alert('Мы пока не поддерживаем регистрацию с Apple');
-  }
-
-  onLoginWithFacebookClicked() {
-    alert('Мы пока не поддерживаем регистрацию с Facebook');
-  }
-
-  onPoliticsClicked() {
-    alert('Ребята, давайте сегодня без политики');
   }
 
   onLogInAccountClicked() {
@@ -125,19 +99,11 @@ export class SignUpComponent {
     const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g; /////////////
     let result = regex.test(this.email);
 
-    if (this.isFirstNameInvalid) {
+    if (this.isUserNameInvalid) {
       isValid = false;
-    } else if (!this.firstName || this.firstName == ' ' || this.firstName.length === 1) {
-      this.firstNameErrorMessage = 'Пожалуйста проверьте ваше Имя';
-      this.isFirstNameInvalid = true;
-      isValid = false;
-    }
-
-    if (this.isSecondNameInvalid) {
-      isValid = false;
-    } else if (!this.secondName || this.secondName == ' ' || this.secondName.length === 1) {
-      this.secondNameErrorMessage = 'Пожалуйста проверьте вашу Фамилию';
-      this.isSecondNameInvalid = true;
+    } else if (!this.userName || this.userName == ' ' || this.userName.length === 1) {
+      this.userNameErrorMessage = 'Пожалуйста проверьте ваше Имя';
+      this.isUserNameInvalid = true;
       isValid = false;
     }
 
@@ -154,14 +120,6 @@ export class SignUpComponent {
     } else if (!this.password || this.password == ' ' || (this.password.length < 6)) {
       this.passwordErrorMessage = 'Пожалуйста проверьте пароль';
       this.isPasswordInvalid = true;
-      isValid = false;
-    }
-
-    if (this.isPoliticsInvalid) {
-      isValid = false;
-    } else if (!this.isPoliticsAgree) {
-      this.politicsErrorMessage = 'Необходимо ваше согласие';
-      this.isPoliticsInvalid = true;
       isValid = false;
     }
     return isValid;

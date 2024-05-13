@@ -8,6 +8,7 @@ using Serilog;
 using Application;
 using Persistence;
 using Infrastructure;
+using TelegramBot;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -36,6 +37,7 @@ public class Startup
         services.AddApplicationDependencies(_configuration)
                 .AddInfrastructureDependencies(_configuration)
                 .AddSignalRDependencies(_configuration)
+                .AddTelegramBotDependencies(_configuration)
                 .AddPersistenceDependencies(_configuration);
 
         // Api configuration

@@ -1,0 +1,36 @@
+
+.members-box{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+
+    .search-input{
+        display: flex;
+        padding: 50px 0 20px;
+    }
+
+    .members-list{
+        overflow: hidden;
+
+        .member-item{
+            margin-bottom: 10px;
+            width: 200px;
+
+            &:hover{
+                background-color: aqua;
+                cursor: pointer;
+            }
+
+            &:checked{
+                background-color: rgb(33, 228, 228);
+            }
+        }
+    }
+
+    .add-btn{
+        margin-top: 50px;
+    }
+}

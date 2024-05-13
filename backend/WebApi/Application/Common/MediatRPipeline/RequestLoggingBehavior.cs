@@ -22,7 +22,7 @@ public sealed class RequestLoggingBehavior<TRequest, TResponse> :
         _currentUserService = currentUserService;
     }
 
-    public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+    public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
     {
         var currentUserEmail = _currentUserService.User?.Email ?? "Application";
         var requestBody = JsonConvert.SerializeObject(request, Formatting.None);

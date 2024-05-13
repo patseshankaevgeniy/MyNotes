@@ -14,6 +14,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MaterialModule } from "./shared/material/material.module";
 import { CreateMemberPopupComponent } from './popups/create-member-popup/create-member-popup.component';
 import { AddUserNotePopupModule } from "./popups/add-user-note/add-user-note.module";
+import { LogInTelegramUserComponent } from './shared/log-in-telegram-user/log-in-telegram-user.component';
+import { LogInTeleagramUserModule } from "./shared/log-in-telegram-user/log-in-telegram-user.module";
 
 
 @NgModule({
@@ -22,6 +24,7 @@ import { AddUserNotePopupModule } from "./popups/add-user-note/add-user-note.mod
         AuthLayoutComponent,
         SettingsLayoutComponent,
         CreateMemberPopupComponent,
+        
     ],
     imports: [
         LogInModule,
@@ -35,7 +38,8 @@ import { AddUserNotePopupModule } from "./popups/add-user-note/add-user-note.mod
         MaterialModule,
         ReactiveFormsModule,
         FormsModule,
-        AddUserNotePopupModule
+        AddUserNotePopupModule,
+        LogInTeleagramUserModule
         
     ],
     providers: [
@@ -49,7 +53,8 @@ import { AddUserNotePopupModule } from "./popups/add-user-note/add-user-note.mod
         ReactiveFormsModule,
         MaterialModule,
         FormsModule,
-        AddUserNotePopupModule
+        AddUserNotePopupModule,
+        LogInTeleagramUserModule
     ]
 })
 

@@ -1,4 +1,5 @@
-import { Component, HostBinding, ViewEncapsulation } from '@angular/core';
+import { Component, HostBinding, OnInit, ViewEncapsulation } from '@angular/core';
+import { TelegramAuthCodesService } from '../../../services/telegram-bot/telegram-auth-codes.service';
 
 @Component({
   selector: 'settings-layout',
@@ -7,4 +8,21 @@ import { Component, HostBinding, ViewEncapsulation } from '@angular/core';
   styleUrls: ['./settings-layout.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class SettingsLayoutComponent { }
+export class SettingsLayoutComponent implements OnInit {
+
+  telegramBotLink: string = '';
+
+  constructor(
+    private readonly telegramAuthCodesService: TelegramAuthCodesService
+  ) { }
+
+  ngOnInit() {
+    this.telegramAuthCodesService
+      .getAuthLink()
+      .subscribe((link) => (this.telegramBotLink = link));
+  }
+
+  onConnectionLinkCliked() {
+    window.open(`https://t.me/${this.telegramBotLink}` , '_blank');
+  }
+}

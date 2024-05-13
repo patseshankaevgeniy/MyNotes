@@ -91,6 +91,192 @@ namespace Persistence.Migrations
                     b.ToTable("MembershipStatuses", "dbo");
                 });
 
+            modelBuilder.Entity("Domain.Entities.NewFolder.TelegramAuthCode", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("LinkCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ShortCode")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ShortExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ShortCode")
+                        .IsUnique();
+
+                    b.ToTable("TelegramAuthCodes", "providers");
+                });
+
+            modelBuilder.Entity("Domain.Entities.NewFolder.TelegramBotConfiguration", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("ReceiveMemberNotesNotification")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("TelegramUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TelegramUserId")
+                        .IsUnique();
+
+                    b.ToTable("TelegramBotConfigurations", "providers");
+                });
+
+            modelBuilder.Entity("Domain.Entities.NewFolder.TelegramMessageLog", b =>
+                {
+                    b.Property<long>("TelegramUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("TelegramMessageId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TelegramChatId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsBot")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("TelegramUserId", "TelegramMessageId", "TelegramChatId");
+
+                    b.ToTable("TelegramMessageLogs", "providers");
+                });
+
+            modelBuilder.Entity("Domain.Entities.NewFolder.TelegramSession", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TelegramSessions", "providers");
+                });
+
+            modelBuilder.Entity("Domain.Entities.NewFolder.TelegramSessionMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MessageId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("SessionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SessionId");
+
+                    b.ToTable("TelegramSessionMessages", "providers");
+                });
+
+            modelBuilder.Entity("Domain.Entities.NewFolder.TelegramUser", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LanguageCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("OriginalTelegramUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("TelegramBotToken")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<long>("TelegramChatId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("TelegramUserFirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TelegramUserLastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TelegramUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId", "OriginalTelegramUserId", "TelegramBotToken")
+                        .IsUnique()
+                        .HasFilter("[TelegramBotToken] IS NOT NULL");
+
+                    b.ToTable("TelegramUsers", "providers");
+                });
+
             modelBuilder.Entity("Domain.Entities.Role", b =>
                 {
                     b.Property<Guid>("Id")
@@ -355,6 +541,28 @@ namespace Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.Entities.NewFolder.TelegramBotConfiguration", b =>
+                {
+                    b.HasOne("Domain.Entities.NewFolder.TelegramUser", "TelegramUser")
+                        .WithOne("TelegramBotConfiguration")
+                        .HasForeignKey("Domain.Entities.NewFolder.TelegramBotConfiguration", "TelegramUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TelegramUser");
+                });
+
+            modelBuilder.Entity("Domain.Entities.NewFolder.TelegramSessionMessage", b =>
+                {
+                    b.HasOne("Domain.Entities.NewFolder.TelegramSession", "Session")
+                        .WithMany("Messages")
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Session");
+                });
+
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.HasOne("Domain.Entities.Group", "Group")
@@ -438,6 +646,16 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.Group", b =>
                 {
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Domain.Entities.NewFolder.TelegramSession", b =>
+                {
+                    b.Navigation("Messages");
+                });
+
+            modelBuilder.Entity("Domain.Entities.NewFolder.TelegramUser", b =>
+                {
+                    b.Navigation("TelegramBotConfiguration");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>

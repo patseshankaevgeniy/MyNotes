@@ -12,8 +12,9 @@ namespace Application.Auth.Commands;
 public sealed class SignUpCommand : IRequest<LogInResultModel>
 {
     public string Email { get; init; }
-    public string FirstName { get; init; }
-    public string SecondName { get; init; }
+    public string UserName { get; init; }
+    public string? FirstName { get; init; }
+    public string? SecondName { get; init; }
     public string Password { get; init; }
 }
 
@@ -22,8 +23,7 @@ public sealed class SignUpCommandValidator : AbstractValidator<SignUpCommand>
     public SignUpCommandValidator()
     {
         RuleFor(t => t.Email).NotEmpty();
-        RuleFor(t => t.FirstName).NotEmpty();
-        RuleFor(t => t.SecondName).NotEmpty();
+        RuleFor(t => t.UserName).NotEmpty();
         RuleFor(t => t.Password).NotEmpty();
     }
 }
@@ -53,9 +53,9 @@ public sealed class SignUpCommandHandler : IRequestHandler<SignUpCommand, LogInR
         var createUserCommand = new CreateUserCommand
         {
             Email = command.Email,
-            UserName = command.Email,
-            FirstName = command.SecondName,
-            SecondName = command.SecondName,
+            UserName = command.UserName,
+            FirstName = command.SecondName ?? string.Empty,
+            SecondName = command.SecondName ?? string.Empty,
             Password = command.Password
         };
         await _mediator.Send(createUserCommand, token);

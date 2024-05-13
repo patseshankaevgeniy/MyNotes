@@ -100,6 +100,76 @@ export class MyNotesAPIClient {
      * @param body (optional) 
      * @return Success
      */
+    logInWithTelegramUser(body: TelegramUserLogInDto | undefined): Observable<SwaggerResponse<LogInResultDto>> {
+        let url_ = this.baseUrl + "/api/auth/log-in-with-telegram-user";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processLogInWithTelegramUser(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processLogInWithTelegramUser(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<SwaggerResponse<LogInResultDto>>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<SwaggerResponse<LogInResultDto>>;
+        }));
+    }
+
+    protected processLogInWithTelegramUser(response: HttpResponseBase): Observable<SwaggerResponse<LogInResultDto>> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = LogInResultDto.fromJS(resultData200);
+            return _observableOf(new SwaggerResponse(status, _headers, result200));
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ErrorDto.fromJS(resultData400);
+            return throwException("Bad Request", status, _responseText, _headers, result400);
+            }));
+        } else if (status === 500) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result500: any = null;
+            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result500 = ErrorDto.fromJS(resultData500);
+            return throwException("Server Error", status, _responseText, _headers, result500);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SwaggerResponse<LogInResultDto>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
     signUp(body: SignUpDto | undefined): Observable<SwaggerResponse<LogInResultDto>> {
         let url_ = this.baseUrl + "/api/auth/sign-up";
         url_ = url_.replace(/[?&]$/, "");
@@ -418,6 +488,284 @@ export class MyNotesAPIClient {
     }
 
     protected processDeleteMember(response: HttpResponseBase): Observable<SwaggerResponse<void>> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf<SwaggerResponse<void>>(new SwaggerResponse(status, _headers, null as any));
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ErrorDto.fromJS(resultData400);
+            return throwException("Bad Request", status, _responseText, _headers, result400);
+            }));
+        } else if (status === 401) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result401: any = null;
+            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result401 = ErrorDto.fromJS(resultData401);
+            return throwException("Unauthorized", status, _responseText, _headers, result401);
+            }));
+        } else if (status === 500) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result500: any = null;
+            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result500 = ErrorDto.fromJS(resultData500);
+            return throwException("Server Error", status, _responseText, _headers, result500);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SwaggerResponse<void>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @return Success
+     */
+    getTelegramAuthCode(): Observable<SwaggerResponse<TelegramAuthCodeDto>> {
+        let url_ = this.baseUrl + "/api/telegram-auth-codes";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTelegramAuthCode(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTelegramAuthCode(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<SwaggerResponse<TelegramAuthCodeDto>>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<SwaggerResponse<TelegramAuthCodeDto>>;
+        }));
+    }
+
+    protected processGetTelegramAuthCode(response: HttpResponseBase): Observable<SwaggerResponse<TelegramAuthCodeDto>> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = TelegramAuthCodeDto.fromJS(resultData200);
+            return _observableOf(new SwaggerResponse(status, _headers, result200));
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ErrorDto.fromJS(resultData400);
+            return throwException("Bad Request", status, _responseText, _headers, result400);
+            }));
+        } else if (status === 401) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result401: any = null;
+            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result401 = ErrorDto.fromJS(resultData401);
+            return throwException("Unauthorized", status, _responseText, _headers, result401);
+            }));
+        } else if (status === 500) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result500: any = null;
+            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result500 = ErrorDto.fromJS(resultData500);
+            return throwException("Server Error", status, _responseText, _headers, result500);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SwaggerResponse<TelegramAuthCodeDto>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @return Success
+     */
+    refreshTelegramAuthCode(): Observable<SwaggerResponse<TelegramAuthCodeDto>> {
+        let url_ = this.baseUrl + "/api/telegram-auth-codes";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRefreshTelegramAuthCode(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRefreshTelegramAuthCode(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<SwaggerResponse<TelegramAuthCodeDto>>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<SwaggerResponse<TelegramAuthCodeDto>>;
+        }));
+    }
+
+    protected processRefreshTelegramAuthCode(response: HttpResponseBase): Observable<SwaggerResponse<TelegramAuthCodeDto>> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = TelegramAuthCodeDto.fromJS(resultData200);
+            return _observableOf(new SwaggerResponse(status, _headers, result200));
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ErrorDto.fromJS(resultData400);
+            return throwException("Bad Request", status, _responseText, _headers, result400);
+            }));
+        } else if (status === 401) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result401: any = null;
+            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result401 = ErrorDto.fromJS(resultData401);
+            return throwException("Unauthorized", status, _responseText, _headers, result401);
+            }));
+        } else if (status === 500) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result500: any = null;
+            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result500 = ErrorDto.fromJS(resultData500);
+            return throwException("Server Error", status, _responseText, _headers, result500);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SwaggerResponse<TelegramAuthCodeDto>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @return Success
+     */
+    checkTelegramUserExists(): Observable<SwaggerResponse<boolean>> {
+        let url_ = this.baseUrl + "/api/telegram-users";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCheckTelegramUserExists(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCheckTelegramUserExists(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<SwaggerResponse<boolean>>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<SwaggerResponse<boolean>>;
+        }));
+    }
+
+    protected processCheckTelegramUserExists(response: HttpResponseBase): Observable<SwaggerResponse<boolean>> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(new SwaggerResponse(status, _headers, result200));
+            }));
+        } else if (status === 401) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result401: any = null;
+            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result401 = ErrorDto.fromJS(resultData401);
+            return throwException("Unauthorized", status, _responseText, _headers, result401);
+            }));
+        } else if (status === 500) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result500: any = null;
+            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result500 = ErrorDto.fromJS(resultData500);
+            return throwException("Server Error", status, _responseText, _headers, result500);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SwaggerResponse<boolean>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @return No Content
+     */
+    deleteTelegramUser(): Observable<SwaggerResponse<void>> {
+        let url_ = this.baseUrl + "/api/telegram-users";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteTelegramUser(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteTelegramUser(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<SwaggerResponse<void>>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<SwaggerResponse<void>>;
+        }));
+    }
+
+    protected processDeleteTelegramUser(response: HttpResponseBase): Observable<SwaggerResponse<void>> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1153,8 +1501,7 @@ export enum NotePriority {
 
 export class SignUpDto implements ISignUpDto {
     email?: string | undefined;
-    firstName?: string | undefined;
-    secondName?: string | undefined;
+    userName?: string | undefined;
     password?: string | undefined;
 
     constructor(data?: ISignUpDto) {
@@ -1169,8 +1516,7 @@ export class SignUpDto implements ISignUpDto {
     init(_data?: any) {
         if (_data) {
             this.email = _data["email"];
-            this.firstName = _data["firstName"];
-            this.secondName = _data["secondName"];
+            this.userName = _data["userName"];
             this.password = _data["password"];
         }
     }
@@ -1185,8 +1531,7 @@ export class SignUpDto implements ISignUpDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["email"] = this.email;
-        data["firstName"] = this.firstName;
-        data["secondName"] = this.secondName;
+        data["userName"] = this.userName;
         data["password"] = this.password;
         return data;
     }
@@ -1194,9 +1539,92 @@ export class SignUpDto implements ISignUpDto {
 
 export interface ISignUpDto {
     email?: string | undefined;
-    firstName?: string | undefined;
-    secondName?: string | undefined;
+    userName?: string | undefined;
     password?: string | undefined;
+}
+
+export class TelegramAuthCodeDto implements ITelegramAuthCodeDto {
+    link?: string | undefined;
+    linkCode?: string | undefined;
+    shortCode?: number;
+    shortExpirationDate?: Date;
+
+    constructor(data?: ITelegramAuthCodeDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.link = _data["link"];
+            this.linkCode = _data["linkCode"];
+            this.shortCode = _data["shortCode"];
+            this.shortExpirationDate = _data["shortExpirationDate"] ? new Date(_data["shortExpirationDate"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): TelegramAuthCodeDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TelegramAuthCodeDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["link"] = this.link;
+        data["linkCode"] = this.linkCode;
+        data["shortCode"] = this.shortCode;
+        data["shortExpirationDate"] = this.shortExpirationDate ? this.shortExpirationDate.toISOString() : <any>undefined;
+        return data;
+    }
+}
+
+export interface ITelegramAuthCodeDto {
+    link?: string | undefined;
+    linkCode?: string | undefined;
+    shortCode?: number;
+    shortExpirationDate?: Date;
+}
+
+export class TelegramUserLogInDto implements ITelegramUserLogInDto {
+    telegramUserId?: number;
+
+    constructor(data?: ITelegramUserLogInDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.telegramUserId = _data["telegramUserId"];
+        }
+    }
+
+    static fromJS(data: any): TelegramUserLogInDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TelegramUserLogInDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["telegramUserId"] = this.telegramUserId;
+        return data;
+    }
+}
+
+export interface ITelegramUserLogInDto {
+    telegramUserId?: number;
 }
 
 export class UserDto implements IUserDto {

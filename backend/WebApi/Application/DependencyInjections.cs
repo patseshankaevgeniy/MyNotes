@@ -1,6 +1,9 @@
 ﻿using Application.Common.Interfaces;
 using Application.Common.MediatRPipeline;
 using Application.Common.Services;
+using Application.TelegramBot.Common.Services;
+using Application.TelegramBot.Common.Services.Interfaces;
+using Application.TelegramBot.UserNotes;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +22,7 @@ public static class DependencyInjections
             .AddMemoryCache()
             .AddAutoMapper(Assembly.GetExecutingAssembly())
             .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly())
-            .AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()))
+            .AddMediatR((Assembly.GetExecutingAssembly()))
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestLoggingBehavior<,>))
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(ExceptionHandlerBehaviour<,>))
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
@@ -33,7 +36,9 @@ public static class DependencyInjections
 
         services
           .AddScoped<IMessageService, MessageService>()
-          .AddScoped<IUsersCacheService, UsersCacheService>();
+          .AddScoped<IUsersCacheService, UsersCacheService>()
+          .AddScoped<ITelegramBotMessagesProvider, TelegramBotMessagesProvider>()
+          .AddScoped<IBotCommandSelector, AddUserNoteBotCommandSelector>();
 
         return services;
     }

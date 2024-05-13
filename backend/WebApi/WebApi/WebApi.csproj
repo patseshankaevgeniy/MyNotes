@@ -27,5 +27,6 @@
 		<ProjectReference Include="..\Application\Application.csproj" />
 		<ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
 		<ProjectReference Include="..\SignalR\SignalR.csproj" />
+		<ProjectReference Include="..\TelegramBot\TelegramBot.csproj" />
 	</ItemGroup>
 </Project>

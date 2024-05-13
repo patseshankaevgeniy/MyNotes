@@ -1,4 +1,5 @@
 using Application.Common.Interfaces;
+using Application.TelegramBot.Auth.Commands;
 using MediatR;
 using System;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ public sealed class MessageService : IMessageService
     public async Task SendUserCreatedAsync(Guid userId)
     {
         await _usersCacheService.ResetCacheAsync();
-        //await _mediator.Send(new CreateTelegramAuthCodeCommand(userId));
+        await _mediator.Send(new CreateTelegramAuthCodeCommand(userId));
     }
 
     public async Task SendUserUpdatedAsync()
@@ -61,12 +62,12 @@ public sealed class MessageService : IMessageService
         });
     }
 
-    //public async Task SendTelegramUserCreatedAsync(Guid telegramUserId, Guid userId)
-    //{
-    //    await _notificationService.SendNotificationAsync(new()
-    //    {
-    //        Type = Models.NotificationType.TelegramBotConnected,
-    //        UserId = userId
-    //    });
-    //}
+    public async Task SendTelegramUserCreatedAsync(Guid telegramUserId, Guid userId)
+    {
+        await _notificationService.SendNotificationAsync(new()
+        {
+            Type = Models.NotificationType.TelegramBotConnected,
+            UserId = userId
+        });
+    }
 }

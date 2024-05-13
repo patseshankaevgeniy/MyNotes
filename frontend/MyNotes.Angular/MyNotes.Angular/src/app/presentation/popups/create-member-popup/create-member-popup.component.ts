@@ -9,7 +9,7 @@ import { MembersService } from '../../../services/users/members.service';
 @Component({
   selector: 'app-create-member-popup',
   templateUrl: './create-member-popup.component.html',
-  styleUrl: './create-member-popup.component.css'
+  styleUrl: './create-member-popup.component.scss'
 })
 export class CreateMemberPopupComponent implements OnInit {
   members: IMember[] = [];
@@ -49,6 +49,9 @@ export class CreateMemberPopupComponent implements OnInit {
 }
 
 onMemberClick(userId: string) {
+  if(this.addButtonDisabled){
+    this.addButtonDisabled = !this.addButtonDisabled
+  }
   var member = this.members.find((m) => m.userId == userId)!;
   member.selected = !member.selected;
   this.addButtonDisabled = !member.selected;

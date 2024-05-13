@@ -95,25 +95,42 @@
 
 .add-note-btn{
     position: absolute;
-    top:80%;
-    left: 82%;
+    top:92%;
+    left: 85%;
 }
 
-.add-note-btn a{
-  display: inline-block;
-  padding: 10px 20px;
-  color: #03e9f4;
-  font-size: 16px;
-  text-decoration: none;
-  text-transform: uppercase;
-  overflow: hidden;
-  transition: 0.5s;
-  margin-top: 40px;
-  letter-spacing: 4px;
+.add-note-btn button{
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    color: #03e9f4;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+ 
 }
-.add-note-btn a:hover{
+.add-note-btn button:hover{
     cursor: pointer;
+    color: black;
+    background-color: #03e9f4;
 }
 
+.save-changes-btn{
+    position: absolute;
+    top: 92%;
+    left: 5%;
+}
 
+.save-changes-btn button{
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    color: #03e9f4;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
 
+.save-changes-btn button:hover{
+    cursor: pointer;
+    color: black;
+    background-color: #03e9f4;
+}

@@ -56,3 +56,22 @@
     color: rgb(70, 183, 248);
     
 }
+
+.sign-out{
+    align-items: center;
+    display: flex;
+}
+
+.sign-out button{
+    max-width: 50px;
+    border: none;
+    color: rgba(255, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.6);
+    
+}
+
+.sign-out button:hover{
+    cursor: pointer;
+    font-size: 40px;
+    transform: scale();
+}
