@@ -5,6 +5,7 @@ using AutoMapper;
 using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -12,7 +13,10 @@ using System.Threading.Tasks;
 
 namespace Application.UserNotes.Queries;
 
-public sealed record GetUserNotesQuery : IRequest<IEnumerable<UserNoteModel>>;
+public sealed record GetUserNotesQuery : IRequest<IEnumerable<UserNoteModel>>
+{
+    public Guid? UserId { get; init; }
+}
 
 
 public sealed class GetUserNotesQueryHandler : IRequestHandler<GetUserNotesQuery, IEnumerable<UserNoteModel>>
@@ -36,10 +40,16 @@ public sealed class GetUserNotesQueryHandler : IRequestHandler<GetUserNotesQuery
 
     public async Task<IEnumerable<UserNoteModel>> Handle(GetUserNotesQuery query, CancellationToken cancellationToken)
     {
+        var dbQuery = _db.UserNotes.AsQueryable();
+
+        dbQuery = _currentUserService.UserHasMembers
+            ? dbQuery.Where(x => _currentUserService.UserGroupMembersIds.Contains(x.UserId))
+            : dbQuery.Where(x => x.UserId == (query.UserId ?? _currentUserService.UserId));
+
         var actualUserNotes = new List<UserNote>();
-        var userNotes = await _db.UserNotes
+
+        var userNotes = await dbQuery
                 .AsNoTracking()
-                .Where(n => n.UserId == _currentUserService.UserId && n.IsActual)
                 .ToListAsync(cancellationToken);
 
         foreach (var userNote in userNotes)
