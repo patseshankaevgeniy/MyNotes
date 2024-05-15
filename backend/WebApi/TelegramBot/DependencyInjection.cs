@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Telegram.Bot;
 using TelegramBot.Handlers;
 using TelegramBot.MessageSender;
+using TelegramBot.Options;
 using TelegramBot.Recevier;
 
 namespace TelegramBot;
@@ -25,8 +26,13 @@ public static class DependencyInjection
         services
             .AddHttpClient("telegram_bot_client")
             .AddTypedClient<ITelegramBotClient>(httpClient => new TelegramBotClient(configuration["TelegramToken"], httpClient));
-        services
 
+        services
+                .AddOptions<TelegraBotOptions>()
+                .Bind(configuration.GetSection(TelegraBotOptions.SectionName))
+                .Validate(options => !string.IsNullOrEmpty(options.LinkTemplate));
+
+        services
            .AddTransient<ITelegramMessageSender, TelegramMessageSender>();
 
         services

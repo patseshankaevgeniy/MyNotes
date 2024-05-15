@@ -40,13 +40,14 @@
             outline: none;
             background: transparent;
 
-            &:focus ~ label{
+            &:focus ~ label
+            {
                 top: -20px;
                 left: 0;
                 color: #03e9f4;
                 font-size: 12px;
             }
-            
+
         }
 
 

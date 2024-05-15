@@ -15,12 +15,12 @@ import { FailureReason } from "../../../models/login-result.model";
     @HostBinding('class.log-in') host = true;
 
     email = '';
-    isEmailInvalid = false;
-    emailErrorMessage = '';
+    isEmailInvalid = true;
+    emailErrorMessage = 'Empty email';
   
     password = '';
-    isPasswordInvalid = false;
-    passwordErrorMessage = '';
+    isPasswordInvalid = true;
+    passwordErrorMessage = 'Empty password';
   
     isRememberMeChecked = false;
 
@@ -34,6 +34,8 @@ import { FailureReason } from "../../../models/login-result.model";
     }
 
     onLoginClicked(){
+     
+
       this.authService
       .logIn(this.email, this.password)
       .subscribe(({ succeeded, failureReason }) => {
@@ -56,5 +58,27 @@ import { FailureReason } from "../../../models/login-result.model";
           }
         }
       });
+    }
+
+    private isFormValid() {
+      var isValid = true;
+  
+      if (this.isEmailInvalid) {
+        isValid = false;
+      } else if (!this.email || this.email == ' ') {
+        this.emailErrorMessage = 'Пожалуйста введите email';
+        this.isEmailInvalid = true;
+        isValid = false;
+      }
+  
+      if (this.isPasswordInvalid) {
+        isValid = false;
+      } else if (!this.password || this.password == ' ') {
+        this.passwordErrorMessage = 'Пожалуйста введите пароль';
+        this.isPasswordInvalid = true;
+        isValid = false;
+      }
+  
+      return isValid;
     }
   }

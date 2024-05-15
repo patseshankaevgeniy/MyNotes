@@ -1,9 +1,24 @@
 <section class="settings">
-  <div class="settings-container">
-    <div class="telegram-link" (onClick)="onConnectionLinkCliked()">
-     <span> {{ telegramBotLink }}</span>
-     
-     <button (click)="onConnectionLinkCliked()">add</button>
+
+  <div class="telegram-bot-connection" *ngIf="!isTelegramUserConected">
+    <div class="telegram-bot-description">
+      <p>
+        Для того чтобы подключить Telegram bot, отсканируйте QR-code своим гаджетом.
+        После этого у вас на экране появится банер, нажав на который, вы перейдете в Telegram и начнете работу с Telegram bot. 
+        Также для альтернативного подключения Telegram bot, вы можете перейти по ниже указанной ссылке.
+      </p>
+    </div>
+    <div class="settings-container">
+      <div class="telegram-link" (click)="onConnectionLinkCliked()">
+          Ссылка на подключение
+      </div>
+    </div>
+  </div>
+
+  <div class="telegram-bot-configuration" *ngIf="isTelegramUserConected">
+    <div class="configuration-actions">
+      <h3>Delete telegram bot</h3>
+      <button (onclick)="onTelegramUserDeleted()"> Delete </button>
     </div>
   </div>
 </section>
