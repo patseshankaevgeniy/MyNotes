@@ -20,7 +20,9 @@ export class NotificationService {
     constructor(
         private appStore: AppStore
     ){
-
+      this.createConnection();
+      this.subscribeOnNotifications();
+      this.startConnection();
     }
 
     private createConnection() {

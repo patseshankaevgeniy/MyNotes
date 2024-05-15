@@ -11,7 +11,7 @@ public interface IMessageService
     Task SendUserMemberAcceptedAsync(Guid userId);
     Task SendUserMemberDeclinedAsync(Guid userId);
 
-    Task SendOperationCreatedAsync(Guid purchaseId, Guid userId);
+    Task SendOperationCreatedAsync(Guid userNoteId, Guid userId);
 
     Task SendTelegramUserCreatedAsync(Guid telegramUserId, Guid userId);
 }

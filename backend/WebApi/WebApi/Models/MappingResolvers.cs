@@ -23,21 +23,6 @@ public sealed class UserImageUrlResolver : IValueResolver<UserModel, UserDto, st
     }
 }
 
-//public sealed class MemberImageUrlResolver : IValueResolver<MemberModel, MemberDto, string>
-//{
-//    private readonly IImageUrlBuilder _imageUrlBuilder;
-
-//    public MemberImageUrlResolver(IImageUrlBuilder imageUrlBuilder)
-//    {
-//        _imageUrlBuilder = imageUrlBuilder;
-//    }
-
-//    public string Resolve(MemberModel source, MemberDto ___, string __, ResolutionContext _)
-//    {
-//        return _imageUrlBuilder.Build(source.ImageId.ToString());
-//    }
-//}
-
 public sealed class TelegramAuthCodeLinkResolver : IValueResolver<TelegramAuthCodeModel, TelegramAuthCodeDto, string>
 {
     private readonly ITelegramBotClient _telegramBotClient;

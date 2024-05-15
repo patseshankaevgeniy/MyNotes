@@ -18,6 +18,7 @@ using WebApi.Infrastructure.Middlewares;
 using System.Reflection;
 using SignalR;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace WebApi;
@@ -48,11 +49,17 @@ public class Startup
             .AddJsonOptions(options =>
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
-        services.AddCors(opt => opt
-                                .AddDefaultPolicy(b => b
-                                                        .AllowAnyHeader()
-                                                        .AllowAnyMethod()
-                                                        .AllowAnyOrigin()));
+        services
+            .AddResponseCompression()
+            .AddResponseCaching()
+            .AddRouting(opt => opt.LowercaseUrls = true)
+            .Configure<ApiBehaviorOptions>(opt => opt.SuppressModelStateInvalidFilter = true)
+            .AddCors(options => options
+                .AddDefaultPolicy(builder => builder
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .SetIsOriginAllowed(_ => true)
+                    .AllowCredentials()));
 
         // Configure Identity
         services
@@ -139,10 +146,12 @@ public class Startup
             })
             .UseHttpsRedirection()
             .UseMiddleware<CustomExceptionHandlerMiddleware>()
-            .UseRouting()
             .UseCors()
+            .UseRouting()
             .UseAuthentication()
             .UseAuthorization()
+            .UseResponseCompression()
+            .UseResponseCaching()
             .UseMiddleware<InitializeCurrentUserMiddleware>()
             .UseEndpoints(endpoints =>
             {

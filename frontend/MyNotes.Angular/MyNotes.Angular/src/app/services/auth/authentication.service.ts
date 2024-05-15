@@ -44,7 +44,7 @@ export class AuthenticationService {
         map(({ result }) => {
           if (result.succeeded) {
             this.accessTokenService.setToken(result.accessToken!);
-            this.router.navigate([basePath]);
+            this.appStore.init().then(() => this.router.navigate([basePath]));
           }
           return new LoginResult(result.succeeded!, result.failureReason!);
         })
