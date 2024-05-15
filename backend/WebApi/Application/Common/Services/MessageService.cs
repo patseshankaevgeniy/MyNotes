@@ -57,7 +57,7 @@ public sealed class MessageService : IMessageService
     {
         await _notificationService.SendNotificationAsync(new()
         {
-            Type = Models.NotificationType.PurchasesUpdate,
+            Type = Models.NotificationType.UserNotesUpdate,
             UserId = userId
         });
     }

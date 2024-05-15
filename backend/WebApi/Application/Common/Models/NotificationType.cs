@@ -2,7 +2,7 @@
 
 public enum NotificationType
 {
-    PurchasesUpdate,
+    UserNotesUpdate,
     TelegramBotConnected,
     MemberStatusChanged
 }

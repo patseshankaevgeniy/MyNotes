@@ -43,7 +43,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost(Name = "CreateUserNote")]
-        [ProducesResponseType(Status200OK, Type = typeof(UserNoteDto))]
+        [ProducesResponseType(Status201Created, Type = typeof(UserNoteDto))]
         [ProducesResponseType(Status400BadRequest, Type = typeof(ErrorDto))]
         [ProducesResponseType(Status401Unauthorized, Type = typeof(ErrorDto))]
         [ProducesResponseType(Status500InternalServerError, Type = typeof(ErrorDto))]

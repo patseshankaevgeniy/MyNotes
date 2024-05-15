@@ -17,19 +17,15 @@ public sealed class MappingProfile : Profile
         CreateMap<LogInResultModel, LogInResultDto>().ReverseMap();
 
         CreateMap<UserModel, UserDto>();
-           // .ForMember(dto => dto.ImageUrl, opt => opt.MapFrom<UserImageUrlResolver>());
 
         CreateMap<MemberModel, MemberDto>();
-        //.ForMember(dto => dto.ImageUrl, opt => opt.MapFrom<MemberImageUrlResolver>());
 
         CreateMap<TelegramAuthCodeModel, TelegramAuthCodeDto>()
            .ForMember(dto => dto.Link, opt => opt.MapFrom<TelegramAuthCodeLinkResolver>());
 
-
         CreateMap<UserNoteModel, UserNoteDto>().ReverseMap();
 
         CreateMap<GroupModel, GroupDto>();
-        //CreateMap<GroupWithValueModel, GroupWithValueDto>();
 
     }
 }

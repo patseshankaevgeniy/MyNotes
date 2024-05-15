@@ -61,23 +61,6 @@ public sealed class AuthController : ControllerBase
         return Ok(_mapper.Map<LogInResultDto>(model));
     }
 
-    //[AllowAnonymous]
-    //[HttpPost("log-in-with-external-provider", Name = "LogInWithExternalProvider")]
-    //[ProducesResponseType(Status200OK, Type = typeof(LogInResultDto))]
-    //[ProducesResponseType(Status400BadRequest, Type = typeof(ErrorDto))]
-    //[ProducesResponseType(Status500InternalServerError, Type = typeof(ErrorDto))]
-    //public async Task<ActionResult<LogInResultDto>> LogInWithExternalProviderAsync(ExternalLogInDto dto)
-    //{
-    //    var command = new LoginWithProviderCommand
-    //    {
-    //        IdToken = dto.IdToken,
-    //        Provider = dto.Provider
-    //    };
-
-    //    var model = await _mediator.Send(command);
-    //    return Ok(_mapper.Map<LogInResultDto>(model));
-    //}
-
     [AllowAnonymous]
     [HttpPost("sign-up", Name = "SignUp")]
     [ProducesResponseType(Status200OK, Type = typeof(LogInResultDto))]

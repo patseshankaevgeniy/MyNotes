@@ -48,7 +48,7 @@ export class SignUpComponent {
 
   onRegistrationClicked() {
     this.authService
-      .signUp( this.email, this.password, this.userName)
+      .signUp(this.userName, this.email, this.password )
       .subscribe(({ succeeded, failureReason }) => {
         if (!succeeded) {
           switch (failureReason) {

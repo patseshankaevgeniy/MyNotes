@@ -35,22 +35,24 @@ public sealed class CreateUserNoteCommandHandler : IRequestHandler<CreateUserNot
     private readonly IDateTimeService _dateTimeService;
     private readonly IApplicationDbContext _db;
     private readonly ICurrentUserService _currentUserService;
-
+    private readonly IMessageService _messageService;
     public const bool IS_ACTUAL_USER_NOTE = true;
-   
+
 
     public CreateUserNoteCommandHandler(
         IGuidService guidService,
         IMapper mapper,
         IDateTimeService dateTimeService,
         IApplicationDbContext db,
-        ICurrentUserService currentUserService)
+        ICurrentUserService currentUserService,
+        IMessageService messageService)
     {
         _guidService = guidService;
         _mapper = mapper;
         _dateTimeService = dateTimeService;
         _db = db;
         _currentUserService = currentUserService;
+        _messageService = messageService;
     }
 
     public async Task<UserNoteModel> Handle(CreateUserNoteCommand command, CancellationToken token)
@@ -71,6 +73,8 @@ public sealed class CreateUserNoteCommandHandler : IRequestHandler<CreateUserNot
         
         _db.UserNotes.Add(userNote);
         await _db.SaveChangesAsync(token);
+
+        await _messageService.SendOperationCreatedAsync(userNote.Id, _currentUserService.UserId);
 
         var model = _mapper.Map<UserNoteModel>(userNote);
         return model;

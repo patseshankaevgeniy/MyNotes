@@ -50,6 +50,7 @@ public sealed class GetUserNotesQueryHandler : IRequestHandler<GetUserNotesQuery
 
         var userNotes = await dbQuery
                 .AsNoTracking()
+                .Where(x => x.IsActual)
                 .ToListAsync(cancellationToken);
 
         foreach (var userNote in userNotes)
