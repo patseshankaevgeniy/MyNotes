@@ -1,0 +1,30 @@
+.settings{
+    height: 100%;
+    margin-right: 50px;
+    padding: 40px;
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 20px;
+}
+
+.telegram-bot-description{
+    
+
+    p{
+        color: rgba(70, 183, 248, 1);
+    }
+}
+
+.settings-container{
+    
+
+
+    .telegram-link{
+        
+        color: rgb(122, 102, 255);
+        
+        &:hover{
+            cursor: pointer;
+            color: rgb(70, 183, 248);
+        }
+    }
+}

@@ -2,7 +2,9 @@
 using Application.TelegramBot.Auth.Models;
 using Application.Users.Models;
 using AutoMapper;
+using Microsoft.Extensions.Options;
 using Telegram.Bot;
+using TelegramBot.Options;
 using WebApi.Models.Auth;
 using WebApi.Models.TelegramBot;
 
@@ -26,16 +28,19 @@ public sealed class UserImageUrlResolver : IValueResolver<UserModel, UserDto, st
 public sealed class TelegramAuthCodeLinkResolver : IValueResolver<TelegramAuthCodeModel, TelegramAuthCodeDto, string>
 {
     private readonly ITelegramBotClient _telegramBotClient;
+    private readonly TelegraBotOptions _telegramBotOptions;
 
     public TelegramAuthCodeLinkResolver(
-        ITelegramBotClient telegramBotClient)
+        ITelegramBotClient telegramBotClient,
+        IOptions<TelegraBotOptions> options)
     {
         _telegramBotClient = telegramBotClient;
+        _telegramBotOptions = options.Value;
     }
 
     public string Resolve(TelegramAuthCodeModel source, TelegramAuthCodeDto ___, string __, ResolutionContext _)
     {
         var bot = _telegramBotClient.GetMeAsync().GetAwaiter().GetResult();
-        return string.Format(bot.Username, source.LinkCode);
+        return string.Format(_telegramBotOptions.LinkTemplate, bot.Username, source.LinkCode);
     }
 }
